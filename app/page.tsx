@@ -1,9 +1,10 @@
 import { ProductCard } from "./ProductCart";
 import { prisma } from "@/lib/prisma";
+import { Suspense } from "react";
+import ProductsSkeleton from "./ProductsSkeleton";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -11,6 +12,28 @@ import {
 } from "@/components/ui/pagination";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const pageSize = 3;
+
+async function Products({ page }: { page: number }) {
+  const skip = (page - 1) * pageSize;
+  const products = await prisma.product.findMany({
+    skip,
+    take: pageSize,
+  });
+
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  return (
+    <>
+      <p>Showing {products.length} products</p>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </>
+  );
+}
 
 export default async function HomePage({
   searchParams,
@@ -18,36 +41,17 @@ export default async function HomePage({
   searchParams: SearchParams;
 }) {
   const Params = await searchParams;
-
   const page = Number(Params.page) || 1;
-  const pageSize = 3;
-  const skip = (page - 1) * pageSize;
-
-  const [products, total] = await Promise.all([
-    prisma.product.findMany({
-      skip,
-      take: pageSize,
-    }),
-    prisma.product.count(),
-  ]);
-
+  const total = await prisma.product.count();
   const totalPages = Math.ceil(total / pageSize);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-
-  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return (
     <main className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Home</h1>
-
-      <p>Showing {products.length} products</p>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-
+      <Suspense key={page} fallback={<ProductsSkeleton />}>
+        <Products page={page} />
+      </Suspense>
       <Pagination className="mt-8">
         <PaginationContent>
           <PaginationItem>
@@ -61,10 +65,6 @@ export default async function HomePage({
               </PaginationLink>
             </PaginationItem>
           ))}
-
-          {/* <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem> */}
 
           <PaginationItem>
             <PaginationNext href={`?page=${Math.min(totalPages, page + 1)}`} />
