@@ -1,7 +1,7 @@
 import React from "react";
 
 function Product() {
-  return <div className="bg-amber-200">PRODUCT</div>;
+  return <h1 className="text-3xl font-bold mb-6">Products</h1>;
 }
 
 export default Product;
