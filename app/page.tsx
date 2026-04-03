@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { sleep } from "@/lib/utils";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 const pageSize = 3;
@@ -21,7 +22,7 @@ async function Products({ page }: { page: number }) {
     take: pageSize,
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await sleep(1000);
 
   return (
     <>
