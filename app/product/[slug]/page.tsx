@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export async function generateMetadata({
   params,
@@ -47,9 +48,19 @@ export default async function ProductPage({
     notFound();
   }
   await sleep(1000);
+  const breadcrumbs = [
+    { label: "Products", href: "/" },
+    {
+      label: product.category?.name,
+      href: `/category/${product.category?.slug}`,
+    },
+    { label: product.name, href: `/product/${product.slug}`, active: true },
+  ];
+
   return (
-    <main className="container mx-auto p-4">
-      <Card className="max-w-3xl mx-auto">
+    <main className="container mx-auto py-4">
+      <Breadcrumbs items={breadcrumbs} />
+      <Card>
         <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="relative rounded-lg overflow-hidden h-50 md:h-100">
             {product.image && (
