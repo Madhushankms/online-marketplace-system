@@ -10,29 +10,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { sleep } from "@/lib/utils";
+
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 const pageSize = 3;
-
-async function Products({ page }: { page: number }) {
-  const skip = (page - 1) * pageSize;
-  const products = await prisma.product.findMany({
-    skip,
-    take: pageSize,
-  });
-
-  await sleep(1000);
-
-  return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  );
-}
 
 export default async function HomePage({
   searchParams,
@@ -50,7 +33,7 @@ export default async function HomePage({
       <Breadcrumbs items={[{ label: "Products", href: "/", active: true }]} />
 
       <Suspense key={page} fallback={<ProductsSkeleton />}>
-        <Products page={page} />
+        <ProductListServerWrapper params={{ pageSize, page }} />
       </Suspense>
       <Pagination className="mt-8">
         <PaginationContent>

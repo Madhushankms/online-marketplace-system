@@ -7,7 +7,7 @@ type ProductListProps = {
   products: Product[];
 };
 
-export async function ProductList({ products }: ProductListProps) {
+export function ProductList({ products }: ProductListProps) {
   if (products.length === 0) {
     return (
       <div className="text-center text-muted-foreground">
