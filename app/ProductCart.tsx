@@ -13,7 +13,7 @@ import Link from "next/link";
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.slug}`}>
-      <Card className="pt-0 overflow-hidden">
+      <Card className="pt-0 overflow-hidden min-h-100">
         <div className="relative aspect-video">
           {product.image && (
             <Image
