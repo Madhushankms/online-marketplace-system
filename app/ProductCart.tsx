@@ -13,7 +13,8 @@ import Link from "next/link";
 export function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/product/${product.slug}`}>
-      <Card className="pt-0 overflow-hidden min-h-100">
+      {/* remove min-h-100 if you want to remove the fixed height of the card */}
+      <Card className="pt-0 overflow-hidden ">
         <div className="relative aspect-video">
           {product.image && (
             <Image

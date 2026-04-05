@@ -1,15 +1,17 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { prisma } from "@/lib/prisma";
 import { sleep } from "@/lib/utils";
-import { ProductCard } from "../ProductCart";
+import { ProductCard } from "../../ProductCart";
+import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
-import ProductsSkeleton from "../ProductsSkeleton";
+import ProductsSkeleton from "../../ProductsSkeleton";
+import { notFound } from "next/navigation";
 
-type SearchPageProps = {
-  searchParams: Promise<{ query?: string; sort?: string }>;
+type CategoryPageProps = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ sort?: string }>;
 };
 
-async function Products({ query, sort }: { query: string; sort?: string }) {
+async function Products({ slug, sort }: { slug: string; sort?: string }) {
   let orderBy: Record<string, "asc" | "desc"> | undefined = undefined;
 
   if (sort === "price-asc") {
@@ -20,10 +22,9 @@ async function Products({ query, sort }: { query: string; sort?: string }) {
 
   const products = await prisma.product.findMany({
     where: {
-      OR: [
-        { name: { contains: query, mode: "insensitive" } },
-        { description: { contains: query, mode: "insensitive" } },
-      ],
+      category: {
+        slug,
+      },
     },
     ...(orderBy ? { orderBy } : {}),
     take: 18,
@@ -48,23 +49,40 @@ async function Products({ query, sort }: { query: string; sort?: string }) {
   );
 }
 
-export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const params = await searchParams;
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: CategoryPageProps) {
+  const { slug } = await params;
   const { sort } = await searchParams;
-  const query = params.query?.trim() ?? "";
+  const category = await prisma.category.findUnique({
+    where: {
+      slug,
+    },
+    select: {
+      name: true,
+      slug: true,
+    },
+  });
+
+  if (!category) {
+    notFound();
+  }
+
   const breadcrumbs = [
     { label: "Products", href: "/" },
     {
-      label: `Results for "${query}"`,
-      href: `/search?query=${encodeURIComponent(query)}`,
+      label: category.name,
+      href: `/search/${category.slug}`,
     },
   ];
+
   return (
     <>
       <Breadcrumbs items={breadcrumbs} />
 
-      <Suspense key={`${query}-${sort}`} fallback={<ProductsSkeleton />}>
-        <Products query={query} sort={sort} />
+      <Suspense key={`${slug}-${sort}`} fallback={<ProductsSkeleton />}>
+        <Products slug={slug} sort={sort} />
       </Suspense>
     </>
   );
