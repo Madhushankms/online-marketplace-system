@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
 export async function generateMetadata({
   params,
@@ -115,15 +115,7 @@ export default async function ProductPage({
             </div>
             <Separator className="my-4" />
 
-            <div>
-              <Button
-                disabled={product.inventory === 0}
-                className="w-full cursor-pointer"
-              >
-                <ShoppingCart className="mr-1 w-4 h-4" />
-                {product.inventory > 0 ? "Add to cart" : "Out of stock"}
-              </Button>
-            </div>
+            <AddToCartButton product={product} />
           </div>
         </CardContent>
       </Card>
