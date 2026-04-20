@@ -4,7 +4,7 @@ import { CartItemWithProduct, setProductQuantity } from "@/lib/actions";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import { useState } from "react";
 
 interface CartEntryProps {
@@ -13,22 +13,12 @@ interface CartEntryProps {
 export default function CartEntry({ cartItem }: CartEntryProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleIncrement = async () => {
+  const handleSetProductQuantity = async (quantity: number) => {
     setIsLoading(true);
     try {
-      await setProductQuantity(cartItem.product.id, cartItem.quantity + 1);
+      await setProductQuantity(cartItem.product.id, quantity);
     } catch (error) {
-      console.error("Error incrementing cart item:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const handleDecrement = async () => {
-    setIsLoading(true);
-    try {
-      await setProductQuantity(cartItem.product.id, cartItem.quantity - 1);
-    } catch (error) {
-      console.error("Error decrementing cart item:", error);
+      console.error("Error changing the quantity of the cart item:", error);
     } finally {
       setIsLoading(false);
     }
@@ -37,6 +27,17 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
   return (
     <li className="border-b border-muted flex py-4 justify-between">
       <div className="flex space-x-4">
+        <div className="absolute z-10 -ml-1 -mt-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            disabled={isLoading}
+            className="w-7 h-7 rounded-full bg-muted text-muted-foreground"
+            onClick={() => handleSetProductQuantity(0)}
+          >
+            <X className="w-4 h-4" />
+          </Button>
+        </div>
         <div className="overflow-hidden rounded-md border border-muted w-16 h-16">
           {cartItem.product.image && (
             <Image
@@ -60,7 +61,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
           <Button
             variant="ghost"
             className="rounded-l-full"
-            onClick={handleDecrement}
+            onClick={() => handleSetProductQuantity(cartItem.quantity - 1)}
             disabled={isLoading}
           >
             <Minus className="h-4 w-4" />
@@ -69,7 +70,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
           <Button
             variant="ghost"
             className="rounded-r-full"
-            onClick={handleIncrement}
+            onClick={() => handleSetProductQuantity(cartItem.quantity + 1)}
             disabled={isLoading}
           >
             <Plus className="h-4 w-4" />

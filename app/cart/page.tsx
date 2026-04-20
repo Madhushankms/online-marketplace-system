@@ -1,5 +1,6 @@
 import CartEntry from "@/components/cart-entry";
 import { getCart } from "@/lib/actions";
+import CartSummary from "@/components/cart-summary";
 
 export default async function CartPage() {
   const cart = await getCart();
@@ -14,11 +15,14 @@ export default async function CartPage() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col ">
-          {cart.items.map((item) => (
-            <CartEntry key={item.id} cartItem={item} />
-          ))}
-        </div>
+        <>
+          <div className="flex flex-col">
+            {cart.items.map((item) => (
+              <CartEntry key={item.id} cartItem={item} />
+            ))}
+          </div>
+          <CartSummary />
+        </>
       )}
     </main>
   );
