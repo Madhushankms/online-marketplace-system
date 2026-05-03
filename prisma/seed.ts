@@ -1,6 +1,12 @@
-import { Product } from "@/generated/prisma/client";
+import { Product, User } from "@/generated/prisma/client";
 import { prisma } from "../lib/prisma";
+import { hashPassword } from "@/lib/auth";
 async function main() {
+  // Delete in correct order due to foreign key constraints
+  await prisma.cartItem.deleteMany();
+  await prisma.cart.deleteMany();
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
 
@@ -85,6 +91,37 @@ async function main() {
       data: product,
     });
   }
+  const users: User[] = [
+    {
+      id: "1",
+      email: "admin@example.com",
+      password: "password123",
+      name: "Admin User",
+      role: "admin",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "2",
+      email: "user@example.com",
+      password: "password456",
+      name: "Regular User",
+      role: "user",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
+
+  for (const user of users) {
+    const hashedPassword = await hashPassword(user.password);
+    await prisma.user.create({
+      data: {
+        ...user,
+        password: hashedPassword,
+      },
+    });
+  }
+  console.log("Users created");
 }
 main()
   .then(async () => {

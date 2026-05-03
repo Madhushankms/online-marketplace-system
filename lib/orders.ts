@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { getCart } from "./actions";
 import { prisma } from "./prisma";
+import { auth } from "./auth";
 import { createCheckoutSession, OrderWithItemsAndProduct } from "./‎stripe";
 
 export type ProcessCheckoutResponse = {
@@ -12,6 +13,8 @@ export type ProcessCheckoutResponse = {
 
 export async function processCheckout(): Promise<ProcessCheckoutResponse> {
   const cart = await getCart();
+  const session = await auth();
+  const userId = session?.user?.id;
 
   if (!cart || cart.items.length === 0) {
     throw new Error("Cart is empty");
@@ -24,6 +27,7 @@ export async function processCheckout(): Promise<ProcessCheckoutResponse> {
       const newOrder = await tx.order.create({
         data: {
           total,
+          userId: userId || null,
         },
       });
 

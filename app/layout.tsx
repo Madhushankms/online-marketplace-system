@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SessionProvider } from "next-auth/react";
 import { Navbar } from "@/components/navbar";
 
 const geistSans = Geist({
@@ -33,24 +34,27 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <>
-            <header>
-              <Navbar />
-            </header>
-            {children}
-            <footer className="border-t border-dashed py-6">
-              <div className="container mx-auto text-sm text-muted-foreground text-center">
-                © {new Date().getFullYear()} Your Company. All rights reserved.
-              </div>
-            </footer>
-          </>
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <>
+              <header>
+                <Navbar />
+              </header>
+              {children}
+              <footer className="border-t border-dashed py-6">
+                <div className="container mx-auto text-sm text-muted-foreground text-center">
+                  © {new Date().getFullYear()} Your Company. All rights
+                  reserved.
+                </div>
+              </footer>
+            </>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
