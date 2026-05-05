@@ -1,6 +1,5 @@
 import { getProducts, GetProductsParams } from "@/lib/actions";
 import { ProductList } from "./product-list";
-import { sleep } from "@/lib/utils";
 
 interface ProductListServerWrapperProps {
   params: GetProductsParams;
@@ -9,7 +8,6 @@ interface ProductListServerWrapperProps {
 export async function ProductListServerWrapper({
   params,
 }: ProductListServerWrapperProps) {
-  await sleep(1000); // Simulate loading time
   const products = await getProducts(params);
   return <ProductList products={products} />;
 }
