@@ -5,18 +5,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { addToCart } from "@/lib/actions";
 import { Product } from "@/generated/prisma/client";
-
-import { useCart } from "@/lib/use-cart";
+// import { useRouter } from "next/navigation";
 
 export function AddToCartButton({ product }: { product: Product }) {
+  // const router = useRouter();
   const [isAdding, setIsAdding] = useState(false);
-  const { revlidateCart } = useCart();
 
   const handleAddToCart = async () => {
     try {
       setIsAdding(true);
       await addToCart(product.id, 1);
-      revlidateCart();
+      // router.refresh();
     } catch (error) {
       console.error("Error adding to cart:", error);
     } finally {

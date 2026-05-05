@@ -1,5 +1,5 @@
 import { getProductBySlug } from "@/lib/actions";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, sleep } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,7 +8,6 @@ import Image from "next/image";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { AddToCartButton } from "@/components/add-to-cart-button";
-import { prisma } from "@/lib/prisma";
 
 export async function generateMetadata({
   params,
@@ -37,19 +36,6 @@ export async function generateMetadata({
   };
 }
 
-export const revalidate = 15;
-
-export async function generateStaticParams() {
-  const products = await prisma.product.findMany({
-    select: {
-      slug: true,
-    },
-  });
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
-}
-
 export default async function ProductPage({
   params,
 }: {
@@ -61,19 +47,7 @@ export default async function ProductPage({
   if (!product) {
     notFound();
   }
-  const jsonLd = {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    name: product.name,
-    image: product.image,
-    description: product.description,
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: "USD",
-      availability: product.inventory > 0 ? "InStock" : "OutOfStock",
-    },
-  };
+  await sleep(1000);
   const breadcrumbs = [
     { label: "Products", href: "/" },
     {
@@ -145,10 +119,6 @@ export default async function ProductPage({
           </div>
         </CardContent>
       </Card>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
     </main>
   );
 }

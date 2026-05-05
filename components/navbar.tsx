@@ -4,6 +4,8 @@ import { ModeToggle } from "./mode-toggle";
 import { MobileNav } from "./mobile-nav";
 import { SearchInput } from "./search-input";
 import { CartIndicator } from "./cart-indicator";
+import { Suspense } from "react";
+import { CartIndicatorSkeleton } from "./cart-indicator-skeleton";
 import AuthStatus from "./auth-status";
 
 export const categories = [
@@ -40,8 +42,9 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-0">
           <AuthStatus />
-
-          <CartIndicator />
+          <Suspense fallback={<CartIndicatorSkeleton />}>
+            <CartIndicator />
+          </Suspense>
 
           <ModeToggle />
         </div>
