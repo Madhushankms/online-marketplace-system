@@ -12,7 +12,6 @@ import {
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ProductListServerWrapper } from "@/components/ProductListServerWrapper";
-import { getProductsCountCached } from "@/lib/actions";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 const pageSize = 3;
