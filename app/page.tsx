@@ -1,7 +1,6 @@
-import { ProductCard } from "./ProductCart";
-import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import ProductsSkeleton from "./ProductsSkeleton";
+import { getProductsCountCached } from "@/lib/actions";
 import {
   Pagination,
   PaginationContent,
@@ -24,7 +23,7 @@ export default async function HomePage({
 }) {
   const Params = await searchParams;
   const page = Number(Params.page) || 1;
-  const total = await prisma.product.count();
+  const total = await getProductsCountCached();
   const totalPages = Math.ceil(total / pageSize);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 

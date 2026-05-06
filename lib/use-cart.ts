@@ -9,6 +9,7 @@ export function useCart() {
       itemCount: 0,
     },
   });
+
   const revlidateCart = () => {
     mutate("/api/cart");
   };
