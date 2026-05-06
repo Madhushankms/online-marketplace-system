@@ -49,6 +49,19 @@ export async function generateStaticParams() {
   }));
 }
 
+export const revalidate = 15;
+
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({
+    select: {
+      slug: true,
+    },
+  });
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 export default async function ProductPage({
   params,
 }: {

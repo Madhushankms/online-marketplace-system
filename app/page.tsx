@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ProductsSkeleton from "./ProductsSkeleton";
+import { getProductsCountCached } from "@/lib/actions";
 import {
   Pagination,
   PaginationContent,

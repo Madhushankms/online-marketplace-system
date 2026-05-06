@@ -7,6 +7,7 @@ import { addToCart } from "@/lib/actions";
 import { useCart } from "@/lib/use-cart";
 import { Product } from "@/generated/prisma/client";
 
+
 export function AddToCartButton({ product }: { product: Product }) {
   const [isAdding, setIsAdding] = useState(false);
   const { revlidateCart } = useCart();

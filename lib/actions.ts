@@ -261,3 +261,4 @@ export async function getCategoryBySlugCached(slug: string) {
     revalidate: 3600,
   })();
 }
+

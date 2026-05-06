@@ -38,10 +38,12 @@ export default function RootLayout({
 }>) {
   return (
     <Suspense>
+
       <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+
           <SessionProvider>
             <ThemeProvider
               attribute="class"

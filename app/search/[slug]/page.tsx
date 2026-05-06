@@ -1,6 +1,5 @@
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
-import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import ProductsSkeleton from "../../ProductsSkeleton";
 import { notFound } from "next/navigation";
@@ -32,6 +31,7 @@ export async function generateMetadata({
     },
   };
 }
+
 export default async function CategoryPage({
   params,
   searchParams,
@@ -39,6 +39,7 @@ export default async function CategoryPage({
   const { slug } = await params;
   const { sort } = await searchParams;
   const category = await getCategoryBySlugCached(slug);
+
   if (!category) {
     notFound();
   }
