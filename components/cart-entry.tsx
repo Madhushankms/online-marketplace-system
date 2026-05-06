@@ -1,5 +1,4 @@
 "use client";
-
 import { CartItemWithProduct, setProductQuantity } from "@/lib/actions";
 import { formatPrice } from "@/lib/utils";
 import Image from "next/image";
@@ -11,9 +10,11 @@ import { useCart } from "@/lib/use-cart";
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
 }
+
 export default function CartEntry({ cartItem }: CartEntryProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { revlidateCart } = useCart();
+
   const handleSetProductQuantity = async (quantity: number) => {
     setIsLoading(true);
     try {
@@ -40,6 +41,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
             <X className="w-4 h-4" />
           </Button>
         </div>
+
         <div className="overflow-hidden rounded-md border border-muted w-16 h-16">
           {cartItem.product.image && (
             <Image
@@ -52,7 +54,7 @@ export default function CartEntry({ cartItem }: CartEntryProps) {
           )}
         </div>
         <div className="flex flex-col">
-          <div className=" font-medium">{cartItem.product.name}</div>
+          <div className="font-medium">{cartItem.product.name}</div>
         </div>
       </div>
 

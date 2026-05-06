@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/mode-toggle";
 import { SessionProvider } from "next-auth/react";
 import { Navbar } from "@/components/navbar";
 import { Suspense } from "react";
@@ -40,12 +38,12 @@ export default function RootLayout({
 }>) {
   return (
     <Suspense>
-      <html
-        lang="en"
-        className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-        suppressHydrationWarning
-      >
-        <body className="min-h-full flex flex-col">
+
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+
           <SessionProvider>
             <ThemeProvider
               attribute="class"

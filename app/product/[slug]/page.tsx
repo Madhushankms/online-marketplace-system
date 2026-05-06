@@ -36,6 +36,18 @@ export async function generateMetadata({
     },
   };
 }
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const products = await prisma.product.findMany({
+    select: {
+      slug: true,
+    },
+  });
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
 
 export const revalidate = 15;
 
@@ -57,10 +69,12 @@ export default async function ProductPage({
 }) {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
+  console.log(`Fetching product ${slug}`);
 
   if (!product) {
     notFound();
   }
+
   const jsonLd = {
     "@context": "https://schema.org/",
     "@type": "Product",
@@ -74,6 +88,7 @@ export default async function ProductPage({
       availability: product.inventory > 0 ? "InStock" : "OutOfStock",
     },
   };
+
   const breadcrumbs = [
     { label: "Products", href: "/" },
     {

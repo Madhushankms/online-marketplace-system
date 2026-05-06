@@ -54,6 +54,31 @@ export async function getProducts({
     take,
   });
 }
+export async function getProductsCached({
+  query,
+  slug,
+  sort,
+  page = 1,
+  pageSize = 3,
+}: GetProductsParams) {
+  const cacheKey = createProductsCacheKey({
+    search: query,
+    categorySlug: slug,
+    sort,
+    page,
+    limit: pageSize,
+  });
+  const cacheTags = createProductsTags({ search: query, categorySlug: slug });
+
+  return unstable_cache(
+    () => getProducts({ query, slug, sort, page, pageSize }),
+    [cacheKey],
+    {
+      tags: cacheTags,
+      revalidate: 3600,
+    },
+  )();
+}
 
 export async function getProductBySlug(slug: string) {
   const product = await prisma.product.findUnique({
@@ -90,7 +115,7 @@ async function findCartFromCookie(): Promise<CartWithProducts | null> {
 
   return unstable_cache(
     async (id: string) => {
-      return await prisma.cart.findUnique({
+      return prisma.cart.findUnique({
         where: { id },
         include: {
           items: {
@@ -105,7 +130,7 @@ async function findCartFromCookie(): Promise<CartWithProducts | null> {
       });
     },
     [`cart-${cartId}`],
-    { tags: [`cart-${cartId}`] },
+    { tags: [`cart-${cartId}`], revalidate: 3600 },
   )(cartId);
 }
 
@@ -216,38 +241,10 @@ export async function setProductQuantity(productId: string, quantity: number) {
   }
 }
 
-export async function getProductsCached({
-  query,
-  slug,
-  sort,
-  page = 1,
-  pageSize = 3,
-}: GetProductsParams) {
-  const cacheKey = createProductsCacheKey({
-    search: query,
-    categorySlug: slug,
-    sort,
-    page,
-    limit: pageSize,
-  });
-  const cacheTags = createProductsTags({ search: query, categorySlug: slug });
-
-  return unstable_cache(
-    () => {
-      console.log("getProductsCached", { query, slug, sort, page, pageSize });
-      return getProducts({ query, slug, sort, page, pageSize });
-    },
-    [cacheKey],
-    {
-      tags: cacheTags,
-      revalidate: 3600,
-    },
-  )();
-}
-
 export async function getProductsCountCached() {
   return unstable_cache(() => prisma.product.count(), ["products-count"], {
     tags: ["products"],
+    revalidate: 3600,
   })();
 }
 
@@ -264,3 +261,4 @@ export async function getCategoryBySlugCached(slug: string) {
     revalidate: 3600,
   })();
 }
+

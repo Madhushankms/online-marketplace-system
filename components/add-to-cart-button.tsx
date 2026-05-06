@@ -4,9 +4,9 @@ import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { addToCart } from "@/lib/actions";
+import { useCart } from "@/lib/use-cart";
 import { Product } from "@/generated/prisma/client";
 
-import { useCart } from "@/lib/use-cart";
 
 export function AddToCartButton({ product }: { product: Product }) {
   const [isAdding, setIsAdding] = useState(false);
@@ -28,7 +28,7 @@ export function AddToCartButton({ product }: { product: Product }) {
     <Button
       onClick={handleAddToCart}
       disabled={product.inventory === 0 || isAdding}
-      className="w-full cursor-pointer"
+      className="w-full"
     >
       <ShoppingCart className="mr-1 w-4 h-4" />
       {product.inventory > 0 ? "Add to cart" : "Out of stock"}

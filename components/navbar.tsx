@@ -1,10 +1,9 @@
 import Link from "next/link";
-
 import { ModeToggle } from "./mode-toggle";
 import { MobileNav } from "./mobile-nav";
 import { SearchInput } from "./search-input";
-import { CartIndicator } from "./cart-indicator";
 import AuthStatus from "./auth-status";
+import { CartIndicator } from "./cart-indicator";
 
 export const categories = [
   { id: 1, name: "Electronics", href: "/search/electronics" },

@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import OrderStatusBadge from "@/components/order-status-badge";
 import { formatPrice } from "@/lib/utils";
 import { OrderWithItemsAndProduct } from "@/lib/‎stripe";
