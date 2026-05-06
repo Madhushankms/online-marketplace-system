@@ -5,7 +5,7 @@ import { Skeleton } from "./ui/skeleton";
 import { Button } from "./ui/button";
 
 import Link from "next/link";
-import { LogIn, LogOut, User } from "lucide-react";
+import { LogIn, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,

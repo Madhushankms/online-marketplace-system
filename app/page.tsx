@@ -1,4 +1,3 @@
-import { ProductCard } from "./ProductCart";
 import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import ProductsSkeleton from "./ProductsSkeleton";
