@@ -28,13 +28,13 @@ export async function createCheckoutSession(order: OrderWithItemsAndProduct) {
   const line_items = order.items.map((item) => {
     return {
       price_data: {
-        currency: "usd",
+        currency: "lkr",
         product_data: {
           name: item.product.name,
           description: item.product.description ?? "",
           images: [item.product.image ?? ""],
         },
-        unit_amount: item.product.price * 100,
+        unit_amount: item.product.price,
       },
       quantity: item.quantity,
     };
