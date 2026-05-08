@@ -8,7 +8,7 @@ interface OrderSummaryProps {
 
 export default async function OrderSummary({ order }: OrderSummaryProps) {
   return (
-    <div className="flex flex-col pt-4">
+    <div className="flex flex-col pt-4 ">
       <div className="text-sm text-muted-foreground">
         <div className="flex items-center justify-between border-b pb-1 mb-3">
           <p>Subtotal</p>

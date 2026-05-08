@@ -28,9 +28,8 @@ export default async function HomePage({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 px-4 lg:px-0">
       <Breadcrumbs items={[{ label: "Products", href: "/", active: true }]} />
-
       <Suspense key={page} fallback={<ProductsSkeleton />}>
         <ProductListServerWrapper params={{ pageSize, page }} />
       </Suspense>

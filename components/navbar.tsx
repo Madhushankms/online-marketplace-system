@@ -13,8 +13,8 @@ export const categories = [
 
 export function Navbar() {
   return (
-    <div className="border-b border-dashed">
-      <div className="container mx-auto flex h-16 items-center justify-between">
+    <div className="border-b border-dashed ">
+      <div className="container mx-auto flex h-16 items-center justify-between px-2 lg:px-0">
         <div>
           <div className="flex items-center gap-6">
             <Link className="text-2xl hidden md:block  font-bold" href="/">

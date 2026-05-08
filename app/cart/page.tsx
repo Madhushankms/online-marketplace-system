@@ -25,7 +25,7 @@ export default async function CartPage() {
   };
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 ">
       {!cart || cart.items.length === 0 ? (
         <div className="text-center">
           <h2 className="text-2xl">Your cart is empty</h2>

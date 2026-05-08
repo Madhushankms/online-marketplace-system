@@ -34,7 +34,7 @@ export default async function OrderPage({ params }: OrderPageProps) {
   const isOwner = session?.user?.id === order.userId;
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 px-4 lg:px-0">
       {isOwner && (
         <Breadcrumbs
           items={[

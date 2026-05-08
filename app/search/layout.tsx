@@ -32,15 +32,15 @@ export default function SearchLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 px-4 lg:px-0">
       <div className="flex gap-8">
-        <div className="w-31.25 flex-none">
+        <div className="w-31.25 flex-none lg:block hidden">
           <Suspense fallback={<div className="w-[125px]">Loading...</div>}>
             <CategorySidebarServerWrapper />
           </Suspense>
         </div>
         <div className="flex-1">{children}</div>
-        <div className="w-31.25 flex-none">
+        <div className="w-31.25 flex-none lg:block hidden">
           {" "}
           <SortingControls />
         </div>

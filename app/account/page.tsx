@@ -31,7 +31,7 @@ export default async function AccountOrdersPage() {
   });
 
   return (
-    <main className="container mx-auto py-4">
+    <main className="container mx-auto py-4 px-4 lg:px-0">
       <Breadcrumbs
         items={[
           {
