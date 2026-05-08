@@ -2,7 +2,6 @@ import { Product, User } from "@/generated/prisma/client";
 import { prisma } from "../lib/prisma";
 import { hashPassword } from "@/lib/auth";
 async function main() {
-  // Delete in correct order due to foreign key constraints
   await prisma.cartItem.deleteMany();
   await prisma.cart.deleteMany();
   await prisma.orderItem.deleteMany();
