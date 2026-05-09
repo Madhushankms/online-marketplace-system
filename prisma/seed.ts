@@ -36,7 +36,7 @@ async function main() {
       id: "1",
       name: "Wireless Headphones",
       description: "Premium noise-cancelling wireless headphones",
-      price: 1500,
+      price: 5.45,
       image:
         "https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       categoryId: electronics.id,
@@ -48,7 +48,7 @@ async function main() {
       name: "Smart Watch",
       description:
         "Fitness tracker with heart rate monitoring and sleep analysis.",
-      price: 3000,
+      price: 3.99,
       image:
         "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       categoryId: electronics.id,
@@ -59,7 +59,7 @@ async function main() {
       id: "3",
       name: "Running Shoes",
       description: "Lightweight running shoes with responsive cushioning.",
-      price: 5500,
+      price: 4.25,
       image:
         "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=1925&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       categoryId: clothing.id,
@@ -70,7 +70,7 @@ async function main() {
       id: "4",
       name: "Ceramic Mug",
       description: "Handcrafted ceramic mug with minimalist design.",
-      price: 4900,
+      price: 2.5,
       image:
         "https://images.unsplash.com/photo-1495100497150-fe209c585f50?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       categoryId: home.id,
@@ -81,7 +81,7 @@ async function main() {
       id: "5",
       name: "Leather Backpack",
       description: "Durable leather backpack with multiple compartments.",
-      price: 3500,
+      price: 6.75,
       image:
         "https://images.unsplash.com/photo-1577733966973-d680bffd2e80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       categoryId: clothing.id,
