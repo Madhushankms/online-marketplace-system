@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "E-Commerce Store",
     template: "%s | E-Commerce Store",
   },
-  description: "A simple e-commerce store built with Next.js and Tailwind CSS",
+  description: "E-commerce store built with Next.js",
   openGraph: {
     title: "E-Commerce Store",
     description:
